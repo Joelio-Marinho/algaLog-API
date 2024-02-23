@@ -2,6 +2,7 @@ package com.algaworks.algalog.algalogapi.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Entity
 public class Cliente implements Serializable {
 
+    @NotNull(groups = ValidationGroups.ClienteID.class)
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
