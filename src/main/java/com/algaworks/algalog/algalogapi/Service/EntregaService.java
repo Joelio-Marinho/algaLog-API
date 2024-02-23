@@ -2,6 +2,8 @@ package com.algaworks.algalog.algalogapi.Service;
 
 import com.algaworks.algalog.algalogapi.Model.Entrega;
 import com.algaworks.algalog.algalogapi.Model.Enum.StatusEntrega;
+import com.algaworks.algalog.algalogapi.Model.Exception.ClienteException;
+import com.algaworks.algalog.algalogapi.Repository.ClienteRepository;
 import com.algaworks.algalog.algalogapi.Repository.EntregaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,15 @@ import java.time.LocalDateTime;
 @Service
 public class EntregaService {
 
+    private ClienteService clienteService;
+
     private EntregaRepository entregaRepository;
 
-    @Transactional
+   @Transactional
     public Entrega solicitar( Entrega entrega){
+        var cliente = clienteService.buscar(entrega.getCliente().getId());
+
+        entrega.setCliente(cliente);
         entrega.setStatus(StatusEntrega.PENDENTE);
         entrega.setData_pedido(LocalDateTime.now());
         return entregaRepository.save(entrega);

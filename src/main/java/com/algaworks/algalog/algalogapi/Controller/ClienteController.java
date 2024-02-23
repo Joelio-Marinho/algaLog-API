@@ -3,12 +3,13 @@ package com.algaworks.algalog.algalogapi.Controller;
 import com.algaworks.algalog.algalogapi.Model.Cliente;
 import com.algaworks.algalog.algalogapi.Repository.ClienteRepository;
 import com.algaworks.algalog.algalogapi.Service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -23,7 +24,6 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente create (@Valid @RequestBody Cliente cliente){
-
         return  clienteService.salvar(cliente);
     }
     @GetMapping

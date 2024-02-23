@@ -9,10 +9,10 @@ create table entrega(
     destinatario_nome varchar(60) not null ,
     destinatario_logradouro varchar(255) not null ,
     destinatario_numero varchar(30) not null ,
-    destinatario_complemento varchar(60) not null ,
+    destinatario_complemento varchar(60) ,
     destinatario_bairro varchar(30) not null ,
 
     primary key (id)
 );
 
-alter table entrega add constraint fk_entrega_cliente foreign key (cliente_id) references Cliente(id);
+alter table entrega add constraint fk_entrega_cliente foreign key (cliente_id) references cliente(id);
