@@ -1,6 +1,7 @@
 package com.algaworks.algalog.algalogapi.Controller.exception;
 
 import com.algaworks.algalog.algalogapi.Model.Exception.ClienteException;
+import com.algaworks.algalog.algalogapi.Model.Exception.EntidadeNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -46,6 +47,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ClienteException.class)
     public ResponseEntity<Object> handleCliente(ClienteException ex, WebRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        Problema problema = new Problema();
+        problema.setStatus(status.value());
+        problema.setDataHora(OffsetDateTime.now());
+        problema.setTitulo(ex.getMessage());
+
+        return handleExceptionInternal(ex,problema,new HttpHeaders(),status,request);
+    }
+
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<Object> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
 
         Problema problema = new Problema();
         problema.setStatus(status.value());

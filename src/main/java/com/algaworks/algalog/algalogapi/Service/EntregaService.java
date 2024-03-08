@@ -3,6 +3,7 @@ package com.algaworks.algalog.algalogapi.Service;
 import com.algaworks.algalog.algalogapi.Model.Entrega;
 import com.algaworks.algalog.algalogapi.Model.Enum.StatusEntrega;
 import com.algaworks.algalog.algalogapi.Model.Exception.ClienteException;
+import com.algaworks.algalog.algalogapi.Model.Exception.EntidadeNaoEncontradaException;
 import com.algaworks.algalog.algalogapi.Repository.ClienteRepository;
 import com.algaworks.algalog.algalogapi.Repository.EntregaRepository;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,10 @@ public class EntregaService {
         entrega.setStatus(StatusEntrega.PENDENTE);
         entrega.setData_pedido(OffsetDateTime.now());
         return entregaRepository.save(entrega);
+    }
+
+    public Entrega findById( Long id){
+       return entregaRepository.findById(id)
+                .orElseThrow(()-> new EntidadeNaoEncontradaException("Entrega não encontrada"));
     }
 }
