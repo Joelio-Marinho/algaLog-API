@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @AllArgsConstructor
 @Service
@@ -25,7 +26,7 @@ public class EntregaService {
 
         entrega.setCliente(cliente);
         entrega.setStatus(StatusEntrega.PENDENTE);
-        entrega.setData_pedido(LocalDateTime.now());
+        entrega.setData_pedido(OffsetDateTime.now());
         return entregaRepository.save(entrega);
     }
 }

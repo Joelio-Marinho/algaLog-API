@@ -13,6 +13,7 @@ import lombok.Setter;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -27,18 +28,14 @@ public class Entrega {
 
     @ConvertGroup(from = Default.class, to = ValidationGroups.ClienteID.class)
     @Valid
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @Valid
-    @NotNull
     @Embedded
     @JoinColumn(name = "destinatario_id")
     private Destinatario destinatario;
 
-    @NotNull
     private BigDecimal taxa;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -46,9 +43,9 @@ public class Entrega {
     private StatusEntrega Status;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime data_pedido;
+    private OffsetDateTime data_pedido;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime Data_finalizacao;
+    private OffsetDateTime Data_finalizacao;
 
 }
