@@ -4,6 +4,7 @@ import com.algaworks.algalog.algalogapi.DTO.EntregaDTO;
 import com.algaworks.algalog.algalogapi.Model.Entrega;
 import com.algaworks.algalog.algalogapi.Repository.EntregaRepository;
 import com.algaworks.algalog.algalogapi.Service.EntregaService;
+import com.algaworks.algalog.algalogapi.Service.FinalizacaoEntregaService;
 import com.algaworks.algalog.algalogapi.common.MapperAssemble;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class EntregaController {
     private EntregaRepository entregaRepository;
 
     private MapperAssemble mapperAssemble;
+    private FinalizacaoEntregaService finalizacaoEntregaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,5 +44,11 @@ public class EntregaController {
         return entregaRepository.findById(id)
                 .map( entrega -> ResponseEntity.ok(mapperAssemble.toDto(entrega, EntregaDTO.class)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}/finalizacao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finalizar( @PathVariable Long id){
+        finalizacaoEntregaService.finalizar(id);
     }
 }

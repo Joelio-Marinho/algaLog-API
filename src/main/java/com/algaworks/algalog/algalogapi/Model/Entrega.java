@@ -1,9 +1,9 @@
 package com.algaworks.algalog.algalogapi.Model;
 
 import com.algaworks.algalog.algalogapi.Model.Enum.StatusEntrega;
+import com.algaworks.algalog.algalogapi.Model.Exception.EntidadeNaoEncontradaException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,6 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +62,17 @@ public class Entrega {
 
         this.getOcorrencias().add(ocorrencia);
         return ocorrencia;
+    }
+
+    public void finalizar() {
+        if(!podeSerFinalizada()){
+            throw new EntidadeNaoEncontradaException("Entrega não pode ser finalizada");
+        }
+        this.setStatus(StatusEntrega.FINALIZADA);
+        this.setData_finalizacao(OffsetDateTime.now());
+    }
+
+    public boolean podeSerFinalizada(){
+        return this.getStatus().equals(StatusEntrega.PENDENTE);
     }
 }
